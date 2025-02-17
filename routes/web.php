@@ -14,14 +14,18 @@ Route::group(['as' => 'auth.', 'prefix' => 'auth', 'middleware' => 'guest'], fun
     Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
 
     Route::post('register', [AuthController::class, 'register'])->middleware('throttle:3,1');
+
     Route::get('forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
-    Route::post('forgot-password', [AuthController::class, 'sendResetLink']);
+    Route::post('forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+    Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
 // User Routes
 Route::middleware(['auth', 'user.active'])->group(function () {
     // User dashboard
-    Route::group([ 'prefix' => 'user'], function () {
+    Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     });
 });

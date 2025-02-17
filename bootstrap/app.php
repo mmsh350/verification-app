@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Middleware\is_active;
-use App\Http\Middleware\is_admin;
-use Illuminate\Auth\AuthenticationException;
+
+use App\Http\Middleware\IsActive;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,31 +12,30 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'user.active' => is_active::class,
-            'is_admin' => is_admin::class,
+            'user.active' => IsActive::class,
+            'user.admin' => IsAdmin::class,
+            'guest' => RedirectIfAuthenticated::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
 
-          $exceptions->render(function (AuthenticationException $e, Request $request) {
-            if ($request->wantsJson()) {
-                return response()->json(['code' => '401', 'message' => 'Unauthenticated'], 401);
-            }
-            return redirect()->guest(route('auth.login'));
-        });
+        // $exceptions->render(function (AuthenticationException $e, Request $request) {
+        //     if ($request->wantsJson()) {
+        //         return response()->json(['code' => '401', 'message' => 'Unauthenticated'], 401);
+        //     }
+        //     return redirect()->guest(route('auth.login'));
+        // });
 
         $exceptions->render(function (RouteNotFoundException $e, Request $request) {
 
             if (str_contains($e->getMessage(), 'login')) {
-                  return redirect()->guest(route('auth.login'));
+                return redirect()->guest(route('auth.login'));
             }
-
-
         });
     })->create();

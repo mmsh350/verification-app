@@ -39,7 +39,6 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-            'redirect_to' => 'auth.login',
         ],
     ],
 
