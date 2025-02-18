@@ -16,10 +16,25 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('password');
+            $table->string('referral_code')->nullable();
+            $table->decimal('referral_bonus', 15, 2)->default(0.0);
+            $table->bigInteger('referred_by')->nullable();
+            $table->bigInteger('claim_id')->default(0);
+            $table->longText('profile_pic')->nullable();
+            $table->enum('idType', ['NIN', 'BVN'])->nullable();
+            $table->string('idNumber')->nullable();
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
+            $table->boolean('wallet_is_created')->default(false);
+            $table->boolean('vwallet_is_created')->default(false);
+            $table->timestamp('current_sign_in_at')->nullable();
+            $table->timestamp('last_sign_in_at')->nullable();
+            $table->string('created_by')->nullable();
+            $table->dateTimeTz('deleted_at')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
         });
 

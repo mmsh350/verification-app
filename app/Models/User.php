@@ -17,7 +17,29 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = ['name', 'email', 'password', 'role', 'is_active'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone_number',
+        'referral_code',
+        'referral_bonus',
+        'referred_by',
+        'claim_id',
+        'profile_pic',
+        'idType',
+        'idNumber',
+        'role',
+        'is_active',
+        'wallet_is_created',
+        'vwallet_is_created',
+        'current_sign_in_at',
+        'last_sign_in_at',
+        'created_by',
+        'deleted_at',
+        'deleted_by'
+    ];
+
 
     protected $attributes = ['is_active' => true];
 

@@ -49,6 +49,27 @@
                             </div>
                         </div>
 
+                        <!-- Referral Code (Invitation Code) -->
+                        <div class="form-group">
+                            <label for="referral_code">Referral Code (Optional)</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend bg-transparent">
+                                    <span class="input-group-text bg-transparent border-right-0">
+                                        <i class="mdi mdi-tag-outline text-primary"></i>
+                                    </span>
+                                </div>
+                                <input type="text"
+                                    class="form-control form-control-lg border-left-0 @error('referral_code') is-invalid @enderror"
+                                    id="referral_code" name="referral_code" maxlength="6"
+                                    placeholder="Referral Code (if any)" value="{{ old('referral_code') }}">
+                                @error('referral_code')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- Password -->
                         <div class="form-group">
                             <label for="password">Password</label>

@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\PasswordResetMail;
+use App\Models\BonusHistory;
 use App\Models\PasswordReset;
 use App\Models\User;
+use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -50,22 +53,119 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
+
+        // Referral Code & Bonus (Optional)
+        $referralDetails = $this->getBonus($request);
+
+        // If referral code is invalid, return the error response
+        if (isset($referralDetails['error'])) {
+            return back()
+                ->withInput()
+                ->with('error', $referralDetails['error']);
+        }
+
         try {
+            // Start a database transaction
+            DB::beginTransaction();
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'referral_code' => $referralDetails['myOwnCode'],
+                'referred_by' => $referralDetails['referral_id'],
             ]);
+            // Commit the transaction
+            DB::commit();
+
+
+            // Add bonus to the referring user (if applicable)
+            if ($referralDetails['referral_id']) {
+                $this->addBonus($referralDetails['referral_id'], $referralDetails['referral_bonus'], $user->id);
+            }
 
             return redirect()->route('auth.login')
                 ->with('success', 'Your account was created successfully. Login to proceed');
         } catch (\Exception $e) {
+
+
+            DB::rollBack();
 
             Log::error('Registration error: ' . $e->getMessage());
 
             return back()
                 ->withInput()
                 ->with('error', 'Registration failed. Please try again later.');
+        }
+    }
+
+    private function getBonus($request)
+    {
+        $referral_id = null;
+        $referral_bonus = 0.00;
+
+        // Check if the referral code is provided and not empty
+        if ($request->filled('referral_code')) {
+            // Find the user with the provided referral code
+            $referralUser = User::where('referral_code', $request->referral_code)->first();
+
+            if ($referralUser) {
+                // Valid referral code found
+                $referral_id = $referralUser->id;
+                $referral_bonus = $referralUser->referral_bonus;
+
+                // If the referral bonus is 0, use the default bonus from the referral_bonus table
+                if (bccomp($referral_bonus, '0.00', 2) === 0.00) {
+                    $defaultBonus = DB::table('referral_bonus')->value('bonus');
+                    if ($defaultBonus !== null) {
+                        $referral_bonus = $defaultBonus;
+                    }
+                }
+            } else {
+                // Invalid referral code
+                return ['error' => 'Invalid Referral Code. Please enter a valid one to proceed.'];
+            }
+        }
+
+        // Generate a unique referral code for the current user
+        do {
+            $random = md5(uniqid($request->email, true));
+            $myOwnCode = substr($random, 0, 6);
+        } while (User::where('referral_code', $myOwnCode)->exists());
+
+        return [
+            'referral_id' => $referral_id,
+            'referral_bonus' => $referral_bonus,
+            'myOwnCode' => $myOwnCode,
+        ];
+    }
+
+    private function addBonus($referral_id, $referral_bonus, $referred_user_id)
+    {
+        // Check if the referring user has a wallet
+        $exist = User::where('id', $referral_id)
+            ->where('wallet_is_created', 1)
+            ->exists();
+
+        if ($exist) {
+            // Get the referring user's bonus record
+            $wallet = Wallet::where('user_id', $referral_id)->first();
+
+            if ($wallet) {
+                // Update the bonus balance
+                $bonus_balance = $wallet->bonus + $referral_bonus;
+
+                Wallet::where('user_id', $referral_id)->update([
+                    'bonus' => $bonus_balance,
+                ]);
+
+                // Log the bonus history
+                BonusHistory::create([
+                    'user_id' => $referral_id,
+                    'referred_user_id' => $referred_user_id,
+                    'amount' => $referral_bonus,
+                    'type' => 'referral',
+                ]);
+            }
         }
     }
 
