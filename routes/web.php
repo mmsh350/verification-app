@@ -28,6 +28,8 @@ Route::middleware(['auth', 'user.active'])->group(function () {
     Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     });
+    // Logout Route
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 // // Admin Routes

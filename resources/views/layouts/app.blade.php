@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="{{ asset('assets/index/css/style-three.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/index/css/style-three11.css') }}">
     <!-- Favicon -->
-    <link href="{{ asset('assets/img/icon/LOGO.jpg') }}" rel="icon" type="image">
+    <link href="{{ asset('assets/index/img/icon/LOGO.jpg') }}" rel="icon" type="image">
     <!-- HTML5 shim and Respond.js for IE8 support -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

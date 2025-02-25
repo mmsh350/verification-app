@@ -13,7 +13,7 @@
                             Cable subscription and educational PIN.
                             Register now and enjoy the amazing services we offer!
                         </p>
-                        <div class="home_btn">
+                        <div class="home_cta">
                             <a href="{{ route('auth.login') }}" class="btn btn-primary">Login</a>
                             <a href="#" class="btn btn-secondary">Register</a>
                         </div>
@@ -21,12 +21,13 @@
                 </div>
                 <!-- Right Side: Image -->
                 <div class="col-lg-6 col-md-6 col-sm-12 text-center">
-                    <img src="{{ asset('assets/index/img/icon/smile.png') }}" alt="AA Taskar Bege" class="img-fluid"
-                        style="max-width: 100%; height: 400px;">
+                    <img src="{{ asset('assets/index/img/icon/smile.png') }}" alt="AA Taskar Bege" class="person-image">
                 </div>
             </div>
         </div>
     </section>
+    <!-- Home Section -->
+
 
     <!-- Token Sale Section -->
     <section id="token_sale" class="token_sale_area section-padding">
@@ -120,7 +121,6 @@
                 <h1>The Most Trusted Verification Platform</h1>
             </div>
             <div class="row">
-                <!-- About Items -->
                 <div class="col-lg-4 col-sm-12 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
                     <div class="single_about">
                         <i class="bi bi-shield-check fs-1 text-primary"></i>
@@ -129,95 +129,56 @@
                             any transaction you carry out with us.</p>
                     </div>
                 </div>
-                <!-- Add other about items similarly -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Download App Section -->
-    <section class="about_us section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-sm-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                    <h2>Install Our App Today</h2>
-                    <p>We offer users instant recharge of airtime, data bundles, cable TV subscriptions (DSTV, GOTV, &
-                        STARTIMES), electricity bill payments, and recharge cards.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                    <ul>
-                        <li><i class="bi bi-download"></i> Download It For Free</li>
-                        <div class="home_btn">
-                            <a href="#" class="btn btn-primary" target="_blank">
-                                <i class="bi bi-apple"></i> App Store
-                            </a>
-                            <a href="#" class="btn btn-secondary" target="_blank">
-                                <i class="bi bi-google-play"></i> Google Play
-                            </a>
-                        </div>
-                    </ul>
-                </div>
-                <!-- Right Side: Image -->
-                <div class="col-lg-6 col-md-6 col-sm-12 text-center">
-                    <img src="{{ asset('assets/img/icon/LOGO.jpg') }}" alt="AA Taskar Bege" class="img-fluid"
-                        style="max-width: 200%; height: 200px;">
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about_us section-padding">
-        <div class="container">
-            <div class="section-title text-center">
-                <h1>The Most Trusted Verification Platform</h1>
-            </div>
-            <div class="row">
-                <!-- About Items -->
-                <div class="col-lg-4 col-sm-12 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+                <div class="col-lg-4 col-sm-12 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
                     <div class="single_about">
-                        <i class="bi bi-shield-check fs-1 text-primary"></i>
-                        <h3>We Are Reliable</h3>
-                        <p>identy is a fully optimized platform for reliability and dependability. You get 100% value for
-                            any transaction you carry out with us.</p>
+                        <i class="bi bi-headset fs-1 text-primary"></i>
+                        <h3>24/7 Support</h3>
+                        <p>Our customers are premium to us, hence satisfying them is our topmost priority. Our customer
+                            service is just a click away.</p>
                     </div>
                 </div>
-                <!-- Add other about items similarly -->
+                <div class="col-lg-4 col-sm-12 col-xs-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="single_about">
+                        <i class="bi bi-gear fs-1 text-primary"></i>
+                        <h3>We Are Automated</h3>
+                        <p>Our data delivery and wallet funding are automated. Airtime top-up and data purchases are
+                            delivered to you almost instantly.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+    <!-- About Us Content -->
 
-    <!-- Download App Section -->
     <section class="about_us section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-sm-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                    <h2>Install Our App Today</h2>
-                    <p>We offer users instant recharge of airtime, data bundles, cable TV subscriptions (DSTV, GOTV, &
-                        STARTIMES), electricity bill payments, and recharge cards.</p>
+        <div class="about-box-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <h2>Install Our App Today</h2>
+                        <p>We offer users instant recharge of airtime, data bundles, cable TV subscriptions (DSTV, GOTV, &
+                            STARTIMES), electricity bill payments, and recharge cards.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <ul>
+                            <i class="bi bi-download"></i> Download It For Free
+                            <div class="home_cta">
+                                <a href="#" class="btn btn-primary" target="_blank">
+                                    <i class="bi bi-apple"></i> App Store
+                                </a>
+                                <a href="#" class="btn btn-secondary" target="_blank">
+                                    <i class="bi bi-google-play"></i> Google Play
+                                </a>
+                            </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                    <ul>
-                        <li><i class="bi bi-download"></i> Download It For Free</li>
-                        <div class="home_btn">
-                            <a href="#" class="btn btn-primary" target="_blank">
-                                <i class="bi bi-apple"></i> App Store
-                            </a>
-                            <a href="#" class="btn btn-secondary" target="_blank">
-                                <i class="bi bi-google-play"></i> Google Play
-                            </a>
-                        </div>
-                    </ul>
-                </div>
-                <!-- Right Side: Image -->
-                <div class="col-lg-6 col-md-6 col-sm-12 text-center">
-                    <img src="{{ asset('assets/index/img/icon/LOGO.jpg') }}" alt="AA Taskar Bege" class="img-fluid"
-                        style="max-width: 200%; height: 200px;">
-                </div>
+            <!-- Right Side: Image -->
+            <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+                <img src="{{ asset('assets/index/img/icon/LOGO.jpg') }}" alt="AA Taskar Bege" class="img-fluid"
+                    style="max-width: 200%; height: 200px;">
             </div>
         </div>
     </section>
