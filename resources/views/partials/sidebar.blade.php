@@ -1,42 +1,47 @@
 <nav class="sidebar sidebar-offcanvas mt-0" id="sidebar">
     <!-- User Profile Section -->
     <div class="sidebar-profile text-center p-3">
-        <i class="bi bi-person-circle" style="font-size: 3rem; color: #fff;"></i>
-        <!-- Bootstrap user-circle icon -->
-        <div class="sidebar-profile-info mt-2 d-none d-md-block"> <!-- Hide on mobile by default -->
-            <span class="sidebar-profile-name d-block">Evan Morales</span> <!-- User's name -->
-            <span class="sidebar-profile-email d-block text-light">evan.morales@example.com</span>
-            <!-- User's email -->
+        @if (auth()->user()->profile_pic)
+            <img src="{{ 'data:image/jpeg;base64,' . auth()->user()->profile_pic }}" alt="Profile Picture"
+                class="rounded-circle shadow" style="width: 80px; height: 80px; object-fit: cover;">
+        @else
+            <i class="bi bi-person-circle" style="font-size: 3rem; color: #fff;"></i>
+        @endif
+
+        <div class="sidebar-profile-info mt-2">
+            <span class="sidebar-profile-name truncate-text">{{ auth()->user()->name }}</span>
+            <span class="sidebar-profile-email text-light truncate-text">
+                <small>{{ auth()->user()->email }}</small>
+            </span>
         </div>
     </div>
 
     <ul class="nav">
         <!-- Dashboard Section -->
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('user.dashboard') }}">
                 <i class="mdi mdi-view-dashboard menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
 
         <!-- Verification Section -->
-        <li class="nav-item">
-            <a class="nav-link" href="./pages/widgets/widgets.html">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ route('user.verify-nin') }}">
                 <i class="mdi mdi-check-circle-outline menu-icon"></i>
                 <span class="menu-title">Verify NIN</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="./pages/widgets/widgets.html">
+            <a class="nav-link" href="{{ route('user.verify-bvn') }}">
                 <i class="mdi mdi-check-circle-outline menu-icon"></i>
                 <span class="menu-title">Verify BVN</span>
             </a>
         </li>
 
-        <!-- Support Section -->
         <li class="nav-item">
-            <a class="nav-link" href="./pages/widgets/widgets.html">
+            <a class="nav-link" href="{{ route('user.verify-bvn') }}">
                 <i class="mdi mdi-lifebuoy menu-icon"></i>
                 <span class="menu-title">Support</span>
             </a>

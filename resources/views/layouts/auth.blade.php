@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,36 +14,36 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="shortcut icon" href="{{ asset($settings->favicon ?? 'assets/images/default_favicon.png') }}">
-
     @stack('styles')
 </head>
+
 <body>
-  <div class="page-loading active" id="loader">
-    <div class="page-loading-inner">
+    <div class="page-loading active" id="loader">
+        <div class="page-loading-inner">
 
-                       <div class="square-box-loader mb-5">
-                          <div class="square-box-loader-container">
-                            <div class="square-box-loader-corner-top"></div>
-                            <div class="square-box-loader-corner-bottom"></div>
-                          </div>
-                          <div class="square-box-loader-square"></div>
-                        </div>
+            <div class="square-box-loader mb-5">
+                <div class="square-box-loader-container">
+                    <div class="square-box-loader-corner-top"></div>
+                    <div class="square-box-loader-corner-bottom"></div>
+                </div>
+                <div class="square-box-loader-square"></div>
+            </div>
 
-                        <h6 class="loader-text">
-            {{ $settings->short_name ?? config('app.name') }}
-        </h6>
+            <h6 class="loader-text">
+                {{ $settings->short_name ?? config('app.name') }}
+            </h6>
+
+        </div>
 
     </div>
 
-  </div>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            @yield('content')
+        </div>
+    </div>
 
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-         @yield('content')
-     </div>
-  </div>
-
- <!-- Plugins: JS -->
+    <!-- Plugins: JS -->
     <script src="{{ asset('assets/js/vendor.bundle.base.js') }}"></script>
 
     <!-- Custom Scripts -->
@@ -53,6 +54,7 @@
     <script src="{{ asset('assets/js/todolist.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
-  @stack('scripts')
+    @stack('scripts')
 </body>
+
 </html>

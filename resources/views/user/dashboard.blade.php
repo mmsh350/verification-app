@@ -8,7 +8,7 @@
             background-color: #5e2572;
             color: #ecf0f1;
             font-family: Arial, sans-serif;
-            height: 100vh;
+            /* height: 100vh; */
             padding-top: 7px;
             padding-bottom: 10px;
         }
@@ -30,12 +30,12 @@
         }
 
         .sidebar .nav-link:hover {
-            /* background-color: #3e1a52; */
-            color: #3498db;
+            background-color: #3e1a52;
+            /* color: #3498db; */
         }
 
         .sidebar .nav-link.active {
-            background-color: #2980b9;
+            background-color: #3e1a52;
             color: #fff;
         }
 
@@ -179,7 +179,11 @@
 @endpush
 @section('content')
     <div class="row">
-        <div class="col-lg-8 grid-margin d-flex flex-column">
+        <div class="mb-3 mt-1">
+            <h4 class="mb-1">Welcome back, {{ auth()->user()->name ?? 'User' }} 👋</h4>
+            <p class="mb-0">Here’s a quick look at your dashboard.</p>
+        </div>
+        <div class="col-lg-12 grid-margin d-flex flex-column">
             <div class="row">
                 <div class="col-md-6 col-6 grid-margin stretch-card">
                     <div class="card hover-shadow">
@@ -201,15 +205,14 @@
                                 <p class="fw-medium mt-3">Bonus Wallet</p>
                             </div>
                             <h1 class="fw-light price">₦80,927</h1>
-
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row flex-grow-1">
+            <div class="row">
                 <!-- Left side column containing the icons -->
-                <div class="col-lg-6 col-12 col-md-6">
-                    <div class="container py-5">
+                <div class="col-lg-12 col-12 col-md-6">
+                    <div class="container py-3" style="max-width: 100%">
                         <h4 class="fw-light mb-4 text-center">Our Services</h4>
                         <div class="row g-4">
                             <!-- Service 1 -->
@@ -259,7 +262,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Service 3 -->
+                            {{-- <!-- Service 3 -->
                             <div class="col-6 col-md-6 col-lg-4">
                                 <div class="card shadow-sm border-0 h-100">
                                     <div class="card-body text-center p-3">
@@ -305,77 +308,61 @@
                                         <a href="#" class="stretched-link"></a>
                                     </div>
                                 </div>
-                            </div>
-
-                            {{-- <!-- Service 6 -->
-                        <div class="col-6 col-md-6 col-lg-4">
-                            <div class="card shadow-sm border-0 h-100">
-                                <div class="card-body text-center p-3">
-                                    <div class="icon-box mb-3">
-                                        <div class="icon-box-media mx-auto d-flex align-items-center justify-content-center bg-primary rounded-circle"
-                                            style="width: 70px; height: 70px;">
-                                            <i class="bi bi-person-badge text-white"
-                                                style="font-size: 35px;"></i>
-                                        </div>
-                                    </div>
-                                    <h5 class="icon-box-title mb-0 fw-bold">NIN SERVICES</h5>
-                                    <a href="#"
-                                        class="stretched-link"></a>
-                                </div>
-                            </div>
-                        </div> --}}
+                            </div> --}}
                         </div>
                     </div>
                 </div>
 
                 <!-- Right side column for transaction table -->
-                <div class="col-lg-6 stretch-card">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h4 class="card-title">Last (20) Transactions</h4>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>User</th>
-                                            <th>Product</th>
-                                            <th>Sale</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Jacob</td>
-                                            <td>Photoshop</td>
-                                            <td class="text-danger">28.76% <i class="bi bi-arrow-down"></i></td>
-                                            <td><span class="badge bg-danger">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Messsy</td>
-                                            <td>Flash</td>
-                                            <td class="text-danger">21.06% <i class="bi bi-arrow-down"></i></td>
-                                            <td><span class="badge bg-warning">In progress</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>John</td>
-                                            <td>Premier</td>
-                                            <td class="text-danger">35.00% <i class="bi bi-arrow-down"></i></td>
-                                            <td><span class="badge bg-info">Fixed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Peter</td>
-                                            <td>After effects</td>
-                                            <td class="text-success">82.00% <i class="bi bi-arrow-up"></i></td>
-                                            <td><span class="badge bg-success">Completed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dave</td>
-                                            <td>53275535</td>
-                                            <td class="text-success">98.05% <i class="bi bi-arrow-up"></i></td>
-                                            <td><span class="badge bg-warning">In progress</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                <div class="col-lg-12 stretch-card mt-">
+                    <div class="container py-3" style="max-width: 100%">
+                        <h4 class="fw-light mb-4 text-center">Recent Transactions</h4>
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>User</th>
+                                                <th>Product</th>
+                                                <th>Sale</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Jacob</td>
+                                                <td>Photoshop</td>
+                                                <td class="text-danger">28.76% <i class="bi bi-arrow-down"></i></td>
+                                                <td><span class="badge bg-danger">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Messsy</td>
+                                                <td>Flash</td>
+                                                <td class="text-danger">21.06% <i class="bi bi-arrow-down"></i></td>
+                                                <td><span class="badge bg-warning">In progress</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>John</td>
+                                                <td>Premier</td>
+                                                <td class="text-danger">35.00% <i class="bi bi-arrow-down"></i></td>
+                                                <td><span class="badge bg-info">Fixed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Peter</td>
+                                                <td>After effects</td>
+                                                <td class="text-success">82.00% <i class="bi bi-arrow-up"></i></td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dave</td>
+                                                <td>53275535</td>
+                                                <td class="text-success">98.05% <i class="bi bi-arrow-up"></i></td>
+                                                <td><span class="badge bg-warning">In progress</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -383,22 +370,7 @@
             </div>
 
         </div>
-        <div class="col-lg-4 grid-margin stretch-card">
-            <div class="card d-flex flex-column justify-content-between">
-                <div class="card-body">
 
-
-                    <h4 class="fw-light mb-0">Virtual Accounts</h4>
-
-                    <p class="mt-3 mb-0 text-muted">Lorem ipsum doller sit amete Lorem ipsum doller
-                        sit
-                        amete Lorem ipsum doller sit amete Lorem ipsum doller sit amete</p>
-                </div>
-                <div class="card-body px-0 pb-0 d-flex flex-column justify-content-between">
-
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 @push('scripts')

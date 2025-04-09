@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('site_name')->nullable();
             $table->string('short_name')->nullable();
             $table->string('logo')->nullable();
+            $table->string('mini_logo')->nullable();
             $table->string('login_background_image')->nullable();
             $table->string('registration_background_image')->nullable();
             $table->string('favicon')->nullable();

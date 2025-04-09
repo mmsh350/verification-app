@@ -19,31 +19,41 @@
             </li>
         </ul>
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg"
-                    alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg"
-                    alt="logo" /></a>
+            <a class="navbar-brand brand-logo" href="{{ route('user.dashboard') }}"> <img
+                    src="{{ asset('assets/images/' . $settings->logo ?? 'assets/images/logo.svg') }}"
+                    alt="logo"></a>
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="{{ route('user.dashboard') }}">
+                <img src="{{ asset('assets/images/' . $settings->mini_logo ?? 'assets/images/logo-mini.svg') }}"
+                    alt="logo">
+            </a>
         </div>
         <ul class="navbar-nav navbar-nav-right">
 
             <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                    <img src="../assets/images/faces/face5.jpg" alt="" />
-                    <span class="nav-profile-name">Evan Morales</span>
+                <a class="nav-link   d-block d-sm-none" href="#" data-bs-toggle="dropdown" id="profileDropdownSm">
+                    @if (auth()->user()->profile_pic)
+                        <img src="{{ 'data:image/;base64,' . auth()->user()->profile_pic }}" class="rounded-circle me-1"
+                            alt="Profile Image" style="width: 32px; height: 32px; object-fit: cover;" />
+                    @else
+                        <i class="bi bi-person-circle" style="font-size: 2rem; color: #fff;"></i>
+                    @endif
+                    <span class="nav-profile-name">{{ auth()->user()->name }}</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item">
-                        <i class="mdi mdi-cog text-primary"></i>
-                        Settings
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">
-                        <i class="mdi mdi-logout text-primary"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
 
+                <a class="nav-link   d-none d-sm-flex align-items-center" href="#" data-bs-toggle="dropdown"
+                    id="profileDropdownLg">
+                    <span class="nav-profile-name">{{ auth()->user()->name }}</span>
+                </a>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-flex">
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <a class="nav-link" href="#" onclick="event.preventDefault(); this.closest('form').submit();">
+                        <i class="mdi mdi-logout text-primary" title="Log out"></i>
+                    </a>
+                </form>
+            </li>
             <li class="nav-item nav-toggler-item-right d-lg-none">
                 <button class="navbar-toggler align-self-center" type="button" data-bs-toggle="offcanvas">
                     <span class="mdi mdi-menu"></span>
@@ -51,4 +61,5 @@
             </li>
         </ul>
     </div>
+
 </nav>

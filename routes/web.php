@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +28,9 @@ Route::middleware(['auth', 'user.active'])->group(function () {
     // User dashboard
     Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/verify-nin', [VerificationController::class, 'index'])->name('verify-nin');
+        Route::get('/verify-bvn', [VerificationController::class, 'index'])->name('verify-bvn');
+        Route::get('/nin-personalize', [VerificationController::class, 'index'])->name('nin-personalize');
     });
     // Logout Route
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');

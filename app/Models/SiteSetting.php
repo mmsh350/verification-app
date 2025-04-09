@@ -10,6 +10,7 @@ class SiteSetting extends Model
         'site_name',
         'short_name',
         'logo',
+        'mini_logo',
         'favicon',
         'login_background_image',
         'registration_background_image',
