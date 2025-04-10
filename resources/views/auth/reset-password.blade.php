@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+@section('title', 'Reset Password')
 @section('content')
     <div class="container  d-flex align-items-center">
         <div class="row justify-content-center w-100">
@@ -44,7 +44,7 @@
                                         <input type="hidden" name="token" value="{{ $token }}">
 
                                         <div class="row mt-4">
-                                            <div class="col-md-12">
+                                            <div class="d-flex gap-3 w-100">
                                                 <button type="submit" class="btn btn-primary">Reset Password</button>
                                                 <a href="{{ route('auth.login') }}" class="btn btn-secondary">Back to
                                                     Login</a>

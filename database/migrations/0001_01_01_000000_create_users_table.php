@@ -28,6 +28,7 @@ return new class extends Migration
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
+            $table->enum('kyc_status', ['Pending', 'Verified', 'Rejected', 'Submitted'])->default('Pending');
             $table->boolean('wallet_is_created')->default(false);
             $table->boolean('vwallet_is_created')->default(false);
             $table->timestamp('current_sign_in_at')->nullable();

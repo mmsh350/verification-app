@@ -3,61 +3,6 @@
 @section('title', 'Dashboard')
 @push('styles')
     <style>
-        /* Sidebar base styling */
-        .sidebar {
-            background-color: #5e2572;
-            color: #ecf0f1;
-            font-family: Arial, sans-serif;
-            /* height: 100vh; */
-            padding-top: 7px;
-            padding-bottom: 10px;
-        }
-
-        .sidebar .nav-item {
-            border-bottom: 1px solid #fff;
-        }
-
-        .sidebar .nav-link {
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            color: #ecf0f1;
-            text-transform: uppercase;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #3e1a52;
-            /* color: #3498db; */
-        }
-
-        .sidebar .nav-link.active {
-            background-color: #3e1a52;
-            color: #fff;
-        }
-
-        .sidebar .menu-icon {
-            margin-right: 15px;
-            font-size: 20px;
-        }
-
-        .sidebar .menu-title {
-            font-weight: 500;
-        }
-
-        /* Remove sub-menu and nested styling */
-        .sidebar .sub-menu {
-            display: none;
-        }
-
-        /* For collapsible section, remove icon rotation */
-        .menu-arrow {
-            display: none;
-        }
-
         /* Default style (for larger screens) */
         .price {
             font-size: 2rem;
@@ -160,21 +105,6 @@
         .card:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
-        /* Hide sidebar-profile-info when sidebar is collapsed */
-        .sidebar-collapse-hide {
-            display: block;
-            /* Show by default */
-        }
-
-        /* Hide sidebar-profile-info when sidebar is collapsed */
-        .sidebar.collapsed .sidebar-profile-info {
-            display: none !important;
-        }
-
-        .sidebar.collapsed .sidebar-profile {
-            display: none !important;
-        }
     </style>
 @endpush
 @section('content')
@@ -183,6 +113,13 @@
             <h4 class="mb-1">Welcome back, {{ auth()->user()->name ?? 'User' }} 👋</h4>
             <p class="mb-0">Here’s a quick look at your dashboard.</p>
         </div>
+        @if ($status == 'Pending')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                We're excited to have you on board! However, we need to verify your identity before activating your
+                account. Simply click the link below to complete the verification process<br>
+            </div>
+        @endif
+        @include('common.message')
         <div class="col-lg-12 grid-margin d-flex flex-column">
             <div class="row">
                 <div class="col-md-6 col-6 grid-margin stretch-card">
@@ -192,11 +129,15 @@
                                 <i class="mdi mdi-wallet-outline mdi-36px"></i>
                                 <p class="fw-medium mt-3">Main Wallet</p>
                             </div>
-                            <h1 class="fw-light price">₦1,450,000</h1>
+                            <h1 class="fw-light price">₦{{ number_format(auth()->user()->wallet->balance, 2) }}</h1>
 
+                            <a href="{{ route('user.wallet') }}" class="btn btn-sm btn-outline-primary mt-3">
+                                Add Fund
+                            </a>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6 col-6 grid-margin stretch-card">
                     <div class="card hover-shadow">
                         <div class="card-body text-center">
@@ -204,7 +145,11 @@
                                 <i class="mdi mdi-gift-outline mdi-36px"></i>
                                 <p class="fw-medium mt-3">Bonus Wallet</p>
                             </div>
-                            <h1 class="fw-light price">₦80,927</h1>
+                            <h1 class="fw-light price">₦{{ number_format(auth()->user()->wallet->bonus, 2) }}</h1>
+
+                            <a href="{{ route('user.wallet') }}" class="btn btn-sm btn-outline-danger mt-3">
+                                Claim Bonus
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -226,7 +171,7 @@
                                             </div>
                                         </div>
                                         <h5 class="icon-box-title mb-0 fw-bold">Verify NIN</h5>
-                                        <a href="#" class="stretched-link"></a>
+                                        <a href="{{ route('user.verify-nin') }}" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +187,7 @@
                                             </div>
                                         </div>
                                         <h5 class="icon-box-title mb-0 fw-bold">Verify BVN</h5>
-                                        <a href="#" class="stretched-link"></a>
+                                        <a href="{{ route('user.verify-bvn') }}" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -320,64 +265,148 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>User</th>
-                                                <th>Product</th>
-                                                <th>Sale</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Jacob</td>
-                                                <td>Photoshop</td>
-                                                <td class="text-danger">28.76% <i class="bi bi-arrow-down"></i></td>
-                                                <td><span class="badge bg-danger">Pending</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Messsy</td>
-                                                <td>Flash</td>
-                                                <td class="text-danger">21.06% <i class="bi bi-arrow-down"></i></td>
-                                                <td><span class="badge bg-warning">In progress</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>John</td>
-                                                <td>Premier</td>
-                                                <td class="text-danger">35.00% <i class="bi bi-arrow-down"></i></td>
-                                                <td><span class="badge bg-info">Fixed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Peter</td>
-                                                <td>After effects</td>
-                                                <td class="text-success">82.00% <i class="bi bi-arrow-up"></i></td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dave</td>
-                                                <td>53275535</td>
-                                                <td class="text-success">98.05% <i class="bi bi-arrow-up"></i></td>
-                                                <td><span class="badge bg-warning">In progress</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    @php
+                                        $transactions = auth()->user()->transactions()->latest()->paginate(10);
+                                        $serialNumber =
+                                            ($transactions->currentPage() - 1) * $transactions->perPage() + 1;
+                                    @endphp
+
+                                    @forelse ($transactions as $data)
+                                        @if ($loop->first)
+                                            <table class="table text-nowrap" style="background: #fafafc !important;">
+                                                <thead>
+                                                    <tr class="table-primary">
+                                                        <th width="5%">ID</th>
+                                                        <th>Reference No.</th>
+                                                        <th>Service Type</th>
+                                                        <th>Description</th>
+                                                        <th>Amount</th>
+                                                        <th class="text-center">Status</th>
+                                                        <th class="text-center">Receipt</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                        @endif
+
+                                        <tr>
+                                            <td>{{ $serialNumber++ }}</td>
+                                            <td>
+                                                <a target="_blank" href="{{ route('user.reciept', $data->referenceId) }}">
+                                                    {{ strtoupper($data->referenceId) }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $data->service_type }}</td>
+                                            <td>{{ $data->service_description }}</td>
+                                            <td>&#8358;{{ number_format($data->amount, 2) }}</td>
+                                            <td class="text-center">
+                                                <span
+                                                    class="badge
+                                                    {{ $data->status == 'Approved' ? 'bg-success' : ($data->status == 'Rejected' ? 'bg-danger' : 'bg-warning') }}">
+                                                    {{ strtoupper($data->status) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a target="_blank" href="{{ route('user.reciept', $data->referenceId) }}"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-download"></i> Download
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        @if ($loop->last)
+                                            </tbody>
+                                            </table>
+
+                                            <div class="d-flex justify-content-center mt-3">
+                                                {{ $transactions->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
+                                            </div>
+                                        @endif
+                                    @empty
+                                        <div class="text-center">
+                                            <p class="fw-semibold fs-15 mt-2">No Transaction Available!</p>
+                                        </div>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="kycModal" tabindex="-1" aria-labelledby="kycModal" data-bs-keyboard="true"
+                data-bs-backdrop="static" data-bs-keyboard="false">
 
-        </div>
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="staticBackdropLabel2">Verify Account
+                            </h6>
+                        </div>
+                        <div class="modal-body">
+                            We're excited to have you on board! However, we need to verify your identity before activating
+                            your
+                            account. provide your Identification number below.
+                        </div>
 
-    </div>
-@endsection
-@push('scripts')
-    <script>
-        document.querySelector('.navbar-toggler').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
-        });
-    </script>
-@endpush
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-md-6 col-lg-6">
+                                <form id="verify" name="verifyForm" method="POST"
+                                    action="{{ route('user.verify-user') }}">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <p class="mb-2 text-muted text-center">Enter your BVN No.</p>
+                                        <input type="text" id="bvn" name="bvn"
+                                            class="form-control text-center" maxlength="11" required />
+                                    </div>
+                                    <div class="text-center mb-3 d-flex justify-content-center gap-2">
+                                        <button type="submit" id="submit" class="btn btn-primary">
+                                            <i class="lar la-check-circle"></i> Verify Now
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <form method="POST" action="{{ route('logout') }}" class="text-center mb-3">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="las la-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                @endsection
+                @push('scripts')
+                    <script>
+                        @if ($kycPending)
+                            const kycModal = new bootstrap.Modal(document.getElementById('kycModal'));
+                            kycModal.show();
+                        @endif
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const form = document.getElementById('verify');
+                            const submitButton = document.getElementById('submit');
+
+                            if (form && submitButton) {
+                                form.addEventListener('submit', function() {
+                                    submitButton.disabled = true;
+                                    submitButton.innerText = 'Verifying ...';
+                                });
+                            }
+                        });
+                    </script>
+                    </script>
+                @endpush

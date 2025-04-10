@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,10 +28,40 @@ Route::group(['as' => 'auth.', 'prefix' => 'auth', 'middleware' => 'guest'], fun
 Route::middleware(['auth', 'user.active'])->group(function () {
     // User dashboard
     Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+
+
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/verify-nin', [VerificationController::class, 'index'])->name('verify-nin');
-        Route::get('/verify-bvn', [VerificationController::class, 'index'])->name('verify-bvn');
-        Route::get('/nin-personalize', [VerificationController::class, 'index'])->name('nin-personalize');
+        Route::post('/verify-user', [VerificationController::class, 'verifyUser'])->name('verify-user');
+
+        Route::middleware(['user.active', 'user.is_kyced'])->group(function () {
+            Route::get('/verify-nin', [VerificationController::class, 'ninVerify'])->name('verify-nin');
+            Route::get('/verify-bvn', [VerificationController::class, 'index'])->name('verify-bvn');
+            Route::get('/nin-personalize', [VerificationController::class, 'index'])->name('nin-personalize');
+
+            //Wallet
+            Route::get('/wallet', [VerificationController::class, 'index'])->name('wallet');
+
+            //Transactions -----------------------------------------------------------------------------------------------------
+            Route::get('/receipt/{referenceId}', [TransactionController::class, 'reciept'])->name('reciept');
+
+            //Verification-----------------------------------------------------------------------------------------------------
+            Route::post('/nin-retrieve', [VerificationController::class, 'ninRetrieve'])->name('ninRetrieve');
+
+            //PDF Downloads -----------------------------------------------------------------------------------------------------
+            Route::get('/standardBVN/{id}', [VerificationController::class, 'standardBVN'])->name("standardBVN");
+            Route::get('/premiumBVN/{id}', [VerificationController::class, 'premiumBVN'])->name("premiumBVN");
+            Route::get('/regularSlip/{id}', [VerificationController::class, 'regularSlip'])->name("regularSlip");
+            Route::get('/standardSlip/{id}', [VerificationController::class, 'standardSlip'])->name("standardSlip");
+            Route::get('/premiumSlip/{id}', [VerificationController::class, 'premiumSlip'])->name("premiumSlip");
+
+            //Whatsapp API Support--------------------------------------------------------------------------
+            Route::get('/support', function () {
+                $phoneNumber = env('phoneNumber');
+                $message = urlencode(env('message'));
+                $url = env('API_URL') . "{$phoneNumber}&text={$message}";
+                return redirect($url);
+            })->name('support');
+        });
     });
     // Logout Route
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
