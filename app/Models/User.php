@@ -31,6 +31,7 @@ class User extends Authenticatable
         'idNumber',
         'role',
         'is_active',
+        'kyc_status',
         'wallet_is_created',
         'vwallet_is_created',
         'current_sign_in_at',
@@ -64,6 +65,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'wallet_is_created' => 'boolean',
+            'vwallet_is_created' => 'boolean',
         ];
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    public function virtualAccount()
+    {
+        return $this->hasOne(VirtualAccount::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }

@@ -13,12 +13,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-    <link rel="shortcut icon" href="{{ asset($settings->favicon ?? 'assets/images/default_favicon.png') }}">
+    <link rel="shortcut icon"
+        href="{{ asset('assets/images/' . $settings->favicon ?? 'assets/images/default_favicon.png') }}">
     @stack('styles')
 </head>
 
 <body>
-    <div class="page-loading active" id="loader">
+    <div class="page-loading " id="loader">
         <div class="page-loading-inner">
 
             <div class="square-box-loader mb-5">
@@ -51,7 +52,6 @@
     <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('assets/js/template.js') }}"></script>
     <script src="{{ asset('assets/js/settings.js') }}"></script>
-    <script src="{{ asset('assets/js/todolist.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     @stack('scripts')

@@ -3,6 +3,7 @@
 
 use App\Http\Middleware\IsActive;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsKyced;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'user.active' => IsActive::class,
+            'user.is_kyced' => IsKyced::class,
             'user.admin' => IsAdmin::class,
             'guest' => RedirectIfAuthenticated::class,
         ]);

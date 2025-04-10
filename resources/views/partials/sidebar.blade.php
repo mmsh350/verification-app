@@ -17,6 +17,7 @@
     </div>
 
     <ul class="nav">
+
         <!-- Dashboard Section -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('user.dashboard') }}">
@@ -26,7 +27,7 @@
         </li>
 
         <!-- Verification Section -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('user.verify-nin') }}">
                 <i class="mdi mdi-check-circle-outline menu-icon"></i>
                 <span class="menu-title">Verify NIN</span>
@@ -41,7 +42,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('user.verify-bvn') }}">
+            <a class="nav-link" href="{{ route('user.support') }}">
                 <i class="mdi mdi-lifebuoy menu-icon"></i>
                 <span class="menu-title">Support</span>
             </a>

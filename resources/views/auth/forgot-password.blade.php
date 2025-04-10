@@ -1,11 +1,11 @@
 @extends('layouts.auth')
-
+@section('title', 'Forget Password')
 @section('content')
     <div class="container d-flex align-items-center">
         <div class="row justify-content-center w-100">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Reset Password</div>
+                    <div class="card-header">Forget Password</div>
 
                     <div class="card-body">
 
@@ -17,7 +17,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4 d-flex justify-content-between">
+                                <div class="d-flex gap-3 w-100">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Send Password Reset Link') }}
                                     </button>
