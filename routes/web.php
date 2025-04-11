@@ -35,7 +35,7 @@ Route::middleware(['auth', 'user.active'])->group(function () {
 
         Route::middleware(['user.active', 'user.is_kyced'])->group(function () {
             Route::get('/verify-nin', [VerificationController::class, 'ninVerify'])->name('verify-nin');
-            Route::get('/verify-bvn', [VerificationController::class, 'index'])->name('verify-bvn');
+            Route::get('/verify-bvn', [VerificationController::class, 'bvnVerify'])->name('verify-bvn');
             Route::get('/nin-personalize', [VerificationController::class, 'index'])->name('nin-personalize');
 
             //Wallet
@@ -46,6 +46,7 @@ Route::middleware(['auth', 'user.active'])->group(function () {
 
             //Verification-----------------------------------------------------------------------------------------------------
             Route::post('/nin-retrieve', [VerificationController::class, 'ninRetrieve'])->name('ninRetrieve');
+            Route::post('/bvn-retrieve', [VerificationController::class, 'bvnRetrieve'])->name('bvnRetrieve');
 
             //PDF Downloads -----------------------------------------------------------------------------------------------------
             Route::get('/standardBVN/{id}', [VerificationController::class, 'standardBVN'])->name("standardBVN");

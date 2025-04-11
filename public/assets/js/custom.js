@@ -1,19 +1,25 @@
 (function () {
-    window.addEventListener('load', function () {
-        var preloader = document.querySelector('.page-loading');
-        // Remove the 'active' class to start the fade-out effect
-        preloader.classList.remove('active');
 
-        // Remove the preloader after the transition duration
+    var preloader = document.querySelector('.page-loading');
+
+    preloader.classList.add('active');
+    preloader.style.display = 'block';
+
+    function hideLoader() {
+        preloader.classList.remove('active');
         setTimeout(function () {
-            preloader.remove();
-        }, 2000); // Match this timeout with the fade-out duration
+            preloader.style.display = 'none';
+        }, 1000);
+    }
+
+    window.addEventListener('load', function () {
+        hideLoader();
     });
+
 })();
 
 (function () {
     'use strict'
-    // Enable Bootstrap validation
     var forms = document.querySelectorAll('.needs-validation')
     Array.prototype.slice.call(forms)
         .forEach(function (form) {

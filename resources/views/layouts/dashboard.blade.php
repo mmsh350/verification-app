@@ -26,7 +26,7 @@
     <style>
         /* Sidebar base styling */
         .sidebar {
-            background-color: #5e2572;
+            background-color: #000;
             color: #ecf0f1;
             font-family: Arial, sans-serif;
             /* height: 100vh; */
@@ -51,12 +51,16 @@
         }
 
         .sidebar .nav-link:hover {
-            background-color: #3e1a52;
+            background-color: #1a1a1a;
             /* color: #3498db; */
         }
 
         .sidebar .nav-link.active {
-            background-color: #3e1a52;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        .sidebar .nav .nav-item .nav-link .menu-title {
             color: #fff;
         }
 

@@ -1,11 +1,24 @@
 $("#verifyNIN").on("click", function (event) {
 
     event.preventDefault();
-    var preloader = document.querySelector('.page-loading');
+
     let data = new FormData(this.form);
     let validationInfo = document.getElementById("validation-info");
     let download = document.getElementById("download");
     $("#errorMsg").hide();
+
+    var preloader = $('.page-loading');
+
+    function showLoader() {
+        preloader.addClass('active').show();
+    }
+
+    function hideLoader() {
+        preloader.removeClass('active');
+        setTimeout(function () {
+            preloader.hide();
+        }, 1000);
+    }
 
     $.ajax({
         type: "post",
@@ -17,8 +30,7 @@ $("#verifyNIN").on("click", function (event) {
         cache: false,
         beforeSend: function () {
 
-            preloader.classList.add('active');
-
+            showLoader();
             $("#download").hide();
 
         },
@@ -81,7 +93,8 @@ $("#verifyNIN").on("click", function (event) {
             `;
                 $("#download").show();
             } else {
-                $('#loader').removeClass('active');
+                hideLoader();
+
                 $("#errorMsg").show();
                 $("#message").html("Invalid Response");
 
@@ -91,7 +104,7 @@ $("#verifyNIN").on("click", function (event) {
             }
         },
         error: function (data) {
-            $('#loader').removeClass('active');
+            hideLoader();
             $.each(data.responseJSON.errors, function (key, value) {
                 $("#errorMsg").show();
                 $("#message").html(value);

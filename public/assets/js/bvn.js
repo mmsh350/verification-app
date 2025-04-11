@@ -1,31 +1,41 @@
 $("#verifyBVN").on("click", function (event) {
-    // Stop the button from submitting the form:
+
     event.preventDefault();
 
     let data = new FormData(this.form);
     let validationInfo = document.getElementById("validation-info");
     let download = document.getElementById("download");
 
+    var preloader = $('.page-loading');
+
+    function showLoader() {
+        preloader.addClass('active').show();
+    }
+
+    function hideLoader() {
+        preloader.removeClass('active');
+        setTimeout(function () {
+            preloader.hide();
+        }, 1000);
+    }
+
     $.ajax({
         type: "post",
-        url: "/bvnv2-retrieve",
+        url: "/user/bvn-retrieve",
         dataType: "json",
         data,
         processData: false,
         contentType: false,
         cache: false,
         beforeSend: function () {
-            // Show loading indicator
-            $("#preloader").show();
+
+            showLoader();
             $("#download").hide();
-            validationInfo.innerHTML = ` <center>
-                                            <img src="assets/images/search.png" width="20%" alt="Search Icon">
-                                                <p class="mt-5">This section will display search results </p>
-                                                </center>`;
+
         },
         success: function (result) {
-            $("#preloader").hide();
-            // <h4 style="background:#285e8e; color:white;   border-top-left-radius: 20px;border-top-right-radius: 20px;">Verified Information</h4>
+            $("#loader").hide();
+
             validationInfo.innerHTML = `
             <div class="border border-light">
    <div class="table-responsive">
@@ -41,37 +51,37 @@ $("#verifyBVN").on("click", function (event) {
          <tbody>
             <tr>
                <th scope="row" rowspan="9">
-                  <img class="rounded" src="data:image/;base64, ${result.data.data.photo}" alt="User Image" style="width: 250px; height: 250px;">
+                  <img class="rounded" src="data:image/;base64, ${result.data.photo}" alt="User Image" style="width: 250px; height: 250px;">
                </th>
             </tr>
             <tr>
                <th scope="row" style="text-align:right; border: none ! important;">BVN</th>
-               <td style="text-align:left" ><span id="bvnno" >${result.data.data.bvn}</span>
+               <td style="text-align:left" ><span id="bvnno" >${result.data.bvn}</span>
                </td>
             </tr>
             <tr>
                <th scope="row" style="text-align:right; border: none ! important;">FirstName</th>
-               <td  style="text-align:left">${result.data.data.firstName}
+               <td  style="text-align:left">${result.data.firstName}
                </td>
             </tr>
             <tr>
                <th scope="row" style="text-align:right; border: none ! important;">Surname</th>
-               <td  style="text-align:left">${result.data.data.lastName}
+               <td  style="text-align:left">${result.data.lastName}
                </td>
             </tr>
             <tr>
                <th scope="row" style="text-align:right; border: none ! important;">Middle Name</th>
-               <td  style="text-align:left">${result.data.data.middleName}
+               <td  style="text-align:left">${result.data.middleName}
                </td>
             </tr>
             <tr>
                <th scope="row" style="text-align:right; border: none ! important;">Phone No</th>
-               <td  style="text-align:left">${result.data.data.phoneNumber}
+               <td  style="text-align:left">${result.data.phoneNumber}
                </td>
             </tr>
             <tr>
                <th scope="row" style="text-align:right; border: none ! important;">Gender</th>
-               <td  style="text-align:left">${result.data.data.gender}
+               <td  style="text-align:left">${result.data.gender}
                </td>
             </tr>
 
@@ -83,7 +93,7 @@ $("#verifyBVN").on("click", function (event) {
             $("#download").show();
         },
         error: function (data) {
-            $("#preloader").hide();
+            $("#loader").hide();
             $.each(data.responseJSON.errors, function (key, value) {
                 $("#errorMsg").show();
                 $("#message").html(value);
@@ -99,7 +109,7 @@ $("#freeSlip").on("click", function (event) {
     let getBVN = $("#bvnno").html();
     $.ajax({
         type: "get",
-        url: "standardBVN/" + getBVN,
+        url: "/user/standardBVN/" + getBVN,
         dataType: "json",
         processData: false,
         contentType: false,
@@ -129,7 +139,7 @@ $("#paidSlip").on("click", function (event) {
     let getBVN = $("#bvnno").html();
     $.ajax({
         type: "get",
-        url: "premiumBVN/" + getBVN,
+        url: "/user/premiumBVN/" + getBVN,
         dataType: "json",
         processData: false,
         contentType: false,

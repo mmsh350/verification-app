@@ -129,7 +129,9 @@
                                 <i class="mdi mdi-wallet-outline mdi-36px"></i>
                                 <p class="fw-medium mt-3">Main Wallet</p>
                             </div>
-                            <h1 class="fw-light price">₦{{ number_format(auth()->user()->wallet->balance, 2) }}</h1>
+                            <h1 class="fw-light price">
+                                ₦{{ auth()->user()->wallet ? number_format(auth()->user()->wallet->balance, 2) : '0.00' }}
+                            </h1>
 
                             <a href="{{ route('user.wallet') }}" class="btn btn-sm btn-outline-primary mt-3">
                                 Add Fund
@@ -145,7 +147,9 @@
                                 <i class="mdi mdi-gift-outline mdi-36px"></i>
                                 <p class="fw-medium mt-3">Bonus Wallet</p>
                             </div>
-                            <h1 class="fw-light price">₦{{ number_format(auth()->user()->wallet->bonus, 2) }}</h1>
+                            <h1 class="fw-light price">
+                                ₦{{ auth()->user()->wallet ? number_format(auth()->user()->wallet->bonus, 2) : '0.00' }}
+                            </h1>
 
                             <a href="{{ route('user.wallet') }}" class="btn btn-sm btn-outline-danger mt-3">
                                 Claim Bonus
